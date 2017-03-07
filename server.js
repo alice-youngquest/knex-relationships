@@ -21,3 +21,4 @@ server.use(bodyParser.urlencoded({ extended: true }))
 
 server.get('/', index.get)
 server.get('/profile/:id', index.displayProfile)
+server.get('/addNewProfile', index.createNewProfile)

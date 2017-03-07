@@ -1,10 +1,11 @@
 var express = require('express')
-
+var path = require('path')
 var db = require('../db')
 
 module.exports = {
   get: get,
-  displayProfile: displayProfile
+  displayProfile: displayProfile,
+  createNewProfile: createNewProfile
 }
 
 function get (req, res) {
@@ -25,4 +26,8 @@ function displayProfile (req, res) {
   .catch(function (err) {
     res.status(500).send('DATABASE ERROR: ' + err.message)
   })
+}
+
+function createNewProfile (req, res) {
+  res.render('newprofile')
 }
