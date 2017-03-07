@@ -3,8 +3,8 @@ var config = require('./knexfile')[environment]
 var connection = require('knex')(config)
 
 module.exports = {
-  getUser: getUser,
-  getUsers: getUsers
+  getUsers: getUsers,
+  getProfile: getProfile
 }
 
 function getUsers (testDb) {
@@ -13,7 +13,15 @@ function getUsers (testDb) {
   return db('users').select()
 }
 
-function getUser (id, testDb) {
+function getProfile (id, testDb){
   var db = testDb || connection
-  return db('users').where('id', id)
+  return db('profiles')
+    .where('users.id', id)
+    .join('users', 'profiles.users_id', '=', 'users.id')
+    .select('users.name', 'profiles.profile_picture_url')
 }
+
+// function getUser (id, testDb) {
+//   var db = testDb || connection
+//   return db('users').where('id', id)
+// }
