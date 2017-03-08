@@ -2,9 +2,12 @@ var environment = process.env.NODE_ENV || 'development'
 var config = require('./knexfile')[environment]
 var connection = require('knex')(config)
 
+
 module.exports = {
-  getUsers: getUsers,
-  getProfile: getProfile
+  getUsers,
+  getProfile,
+  newUser,
+  newProfile
 }
 
 function getUsers (testDb) {
@@ -21,6 +24,18 @@ function getProfile (id, testDb){
     .select('users.name', 'profiles.profile_picture_url')
 }
 
+
+function newUser (name, email) {
+  var db = connection
+  return db('users')
+    .insert({name, email})
+}
+
+function newProfile (users_id, profile_picture_url, url){
+  var db = connection
+  return db('profiles')
+    .insert({users_id, profile_picture_url, url})
+}
 // function getUser (id, testDb) {
 //   var db = testDb || connection
 //   return db('users').where('id', id)
